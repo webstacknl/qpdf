@@ -1,0 +1,15 @@
+{
+    "name": "webstack/qpdf",
+    "description": "QPDF PHP",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webstack B.V.",
+            "email": "info@webstack.nl"
+        }
+    ],
+    "require": {
+        "symfony/process": "^4.3"
+    }
+}
