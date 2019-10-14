@@ -88,6 +88,6 @@ class QPDF
      */
     private function buildCommand(?string $path): string
     {
-        return 'qpdf '. ($this->source?:'--empty') .' '. ($this->pages?:' --pages '. $this->pages .' -- ') . ($path ?: null);
+        return 'qpdf '. ($this->source?:'--empty') .' '. ($this->pages?'--pages '. implode(' ', $this->pages) .' --':'') .' '. ($path ?: null);
     }
 }
