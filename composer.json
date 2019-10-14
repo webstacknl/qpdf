@@ -11,5 +11,10 @@
     ],
     "require": {
         "symfony/process": "^4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webstack\\QPDF\\": "src/"
+        }
     }
 }
