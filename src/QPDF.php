@@ -44,7 +44,7 @@ class QPDF
      */
     public function addPages(string $file, ?array $pages = null): void
     {
-        $this->pages[] = $file . ($pages?' '. $pages:null);
+        $this->pages[] = $file . ($pages ? ' ' . $pages : null);
     }
 
     /**
@@ -53,7 +53,6 @@ class QPDF
     public function write(string $path): void
     {
         $this->run($path);
-
     }
 
     /**
@@ -86,8 +85,8 @@ class QPDF
      * @param string|null $path
      * @return string
      */
-    private function buildCommand(?string $path): string
+    private function buildCommand(?string $path = null): string
     {
-        return 'qpdf '. ($this->source?:'--empty') .' '. ($this->pages?'--pages '. implode(' ', $this->pages) .' --':'') .' '. ($path ?: null);
+        return 'qpdf ' . ($this->source ?: '--empty') . ' ' . ($this->pages ? '--pages ' . implode(' ', $this->pages) . ' --' : '') . ' ' . ($path ?: '-');
     }
 }
