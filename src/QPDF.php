@@ -23,6 +23,19 @@ class QPDF
     private $pages = [];
 
     /**
+     * @var int|null
+     */
+    private $timeout = 60;
+
+    /**
+     * @param int|null $timeout
+     */
+    public function setTimeout(?int $timeout): void
+    {
+        $this->timeout = $timeout;
+    }
+
+    /**
      * @param string $source
      */
     public function source(string $source): void
@@ -72,6 +85,8 @@ class QPDF
         $command = $this->buildCommand($path);
 
         $process = Process::fromShellCommandline($command);
+        $process->setTimeout($this->timeout);
+        $process->setIdleTimeout(null);
         $process->run();
 
         if (!$process->isSuccessful()) {
