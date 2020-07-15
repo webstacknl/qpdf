@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "symfony/process": "^4.3"
+        "symfony/process": "^5.1"
     },
     "autoload": {
         "psr-4": {
