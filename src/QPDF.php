@@ -29,38 +29,51 @@ class QPDF
 
     /**
      * @param int|null $timeout
+     * @return QPDF
      */
     public function setTimeout(?int $timeout): QPDF
     {
         $this->timeout = $timeout;
+
         return $this;
     }
 
     /**
      * @param string $source
+     * @return QPDF
      */
     public function source(string $source): QPDF
     {
         $this->source = $source;
+
         return $this;
     }
 
     /**
      * @param string $file
+     * @return QPDF
      */
     public function addFile(string $file): QPDF
     {
         $this->addPages($file);
+
         return $this;
     }
 
     /**
      * @param string $file
      * @param string|null $pages Example page ranges: 1,3,5-9,15-12: pages 1, 3, 5, 6, 7, 8, 9, 15, 14, 13, and 12 in that order. z-1: all pages in the document in reverse r3-r1: the last three pages of the document. r1-r3: the last three pages of the document in reverse order
+     * @return QPDF
+     * @throws FileNotFoundException
      */
     public function addPages(string $file, ?string $pages = null): QPDF
     {
+        if (!file_exists($file)) {
+            throw new FileNotFoundException($file);
+        }
+
         $this->pages[] = $file . ($pages ? ' ' . $pages : null);
+
         return $this;
     }
 
