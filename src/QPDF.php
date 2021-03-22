@@ -4,6 +4,7 @@ namespace Webstack\QPDF;
 
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
+use Webstack\QPDF\Exceptions\FileNotFoundException;
 
 /**
  * Class QPDF
@@ -52,6 +53,7 @@ class QPDF
     /**
      * @param string $file
      * @return QPDF
+     * @throws FileNotFoundException
      */
     public function addFile(string $file): QPDF
     {

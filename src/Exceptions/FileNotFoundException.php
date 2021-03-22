@@ -1,6 +1,6 @@
 <?php
 
-namespace Webstack\QPDF;
+namespace Webstack\QPDF\Exceptions;
 
 use Exception;
 
