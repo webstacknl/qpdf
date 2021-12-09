@@ -24,5 +24,8 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --no-scripts -q
 
+      - name: Install qpdf
+        run: sudo apt-get install qpdf -q
+
       - name: Run Tests
         run: vendor/bin/phpunit --bootstrap vendor/autoload.php tests
