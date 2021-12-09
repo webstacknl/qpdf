@@ -12,7 +12,7 @@ use Webstack\QPDF\Exceptions\FileNotFoundException;
  */
 class QPDF
 {
-    private ?string $source;
+    private ?string $source = null;
 
     private array $pages = [];
 
