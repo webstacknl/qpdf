@@ -1,0 +1,28 @@
+name: Run phpunit tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['7.4', '8.0', '8.1']
+
+    runs-on: 'ubuntu-latest'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: composer:v2, phpunit:9.5
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-scripts -q
+
+      - name: Run Tests
+        run: vendor/bin/phpunit --bootstrap vendor/autoload.php tests

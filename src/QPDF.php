@@ -18,6 +18,11 @@ class QPDF
 
     private ?int $timeout = 60;
 
+    public static function createInstance(): QPDF
+    {
+        return new self();
+    }
+
     public function setTimeout(?int $timeout): QPDF
     {
         $this->timeout = $timeout;
@@ -83,5 +88,10 @@ class QPDF
     private function buildCommand(?string $path = null): string
     {
         return 'qpdf ' . ($this->source ?: '--empty') . ' ' . ($this->pages ? '--pages ' . implode(' ', $this->pages) . ' --' : '') . ' ' . ($path ?: '-');
+    }
+
+    public function getVersion(): string
+    {
+        return Process::fromShellCommandline('qpdf --version')->mustRun()->getOutput();
     }
 }
