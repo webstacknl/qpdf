@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webstack\QPDF;
 
 use Symfony\Component\Process\Exception\ProcessFailedException;
