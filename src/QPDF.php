@@ -12,7 +12,7 @@ use Webstack\QPDF\Exceptions\FileNotFoundException;
  */
 class QPDF
 {
-    private ?string $source;
+    private ?string $source = null;
 
     private array $pages = [];
 
@@ -30,8 +30,15 @@ class QPDF
         return $this;
     }
 
+    /**
+     * @throws FileNotFoundException
+     */
     public function source(string $source): QPDF
     {
+        if (false === file_exists($source)) {
+            throw new FileNotFoundException($source);
+        }
+
         $this->source = $source;
 
         return $this;
@@ -54,7 +61,7 @@ class QPDF
      */
     public function addPages(string $file, ?string $pages = null): QPDF
     {
-        if (!file_exists($file)) {
+        if (false === file_exists($file)) {
             throw new FileNotFoundException($file);
         }
 
