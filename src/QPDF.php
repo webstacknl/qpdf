@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webstack\QPDF;
 
-use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 use Webstack\QPDF\Exceptions\FileNotFoundException;
 
@@ -76,11 +75,7 @@ class QPDF
         $process = Process::fromShellCommandline($command);
         $process->setTimeout($this->timeout);
         $process->setIdleTimeout(null);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
+        $process->mustRun();
 
         return $process->getOutput();
     }
