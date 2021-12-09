@@ -7,31 +7,16 @@ use Symfony\Component\Process\Process;
 use Webstack\QPDF\Exceptions\FileNotFoundException;
 
 /**
- * Class QPDF
- *
  * @link http://qpdf.sourceforge.net/files/qpdf-manual.html
  */
 class QPDF
 {
-    /**
-     * @var null|string
-     */
-    private $source;
+    private ?string $source;
 
-    /**
-     * @var array
-     */
-    private $pages = [];
+    private array $pages = [];
 
-    /**
-     * @var int|null
-     */
-    private $timeout = 60;
+    private ?int $timeout = 60;
 
-    /**
-     * @param int|null $timeout
-     * @return QPDF
-     */
     public function setTimeout(?int $timeout): QPDF
     {
         $this->timeout = $timeout;
@@ -39,10 +24,6 @@ class QPDF
         return $this;
     }
 
-    /**
-     * @param string $source
-     * @return QPDF
-     */
     public function source(string $source): QPDF
     {
         $this->source = $source;
@@ -51,8 +32,6 @@ class QPDF
     }
 
     /**
-     * @param string $file
-     * @return QPDF
      * @throws FileNotFoundException
      */
     public function addFile(string $file): QPDF
@@ -63,9 +42,8 @@ class QPDF
     }
 
     /**
-     * @param string $file
-     * @param string|null $pages Example page ranges: 1,3,5-9,15-12: pages 1, 3, 5, 6, 7, 8, 9, 15, 14, 13, and 12 in that order. z-1: all pages in the document in reverse r3-r1: the last three pages of the document. r1-r3: the last three pages of the document in reverse order
-     * @return QPDF
+     * Example page ranges: 1,3,5-9,15-12: pages 1, 3, 5, 6, 7, 8, 9, 15, 14, 13, and 12 in that order. z-1: all pages in the document in reverse r3-r1: the last three pages of the document. r1-r3: the last three pages of the document in reverse order
+     *
      * @throws FileNotFoundException
      */
     public function addPages(string $file, ?string $pages = null): QPDF
@@ -79,26 +57,16 @@ class QPDF
         return $this;
     }
 
-    /**
-     * @param string $path
-     */
     public function write(string $path): void
     {
         $this->run($path);
     }
 
-    /**
-     * @return string
-     */
     public function output(): string
     {
         return $this->run();
     }
 
-    /**
-     * @param string|null $path
-     * @return string
-     */
     private function run(?string $path = null): string
     {
         $command = $this->buildCommand($path);
@@ -115,10 +83,6 @@ class QPDF
         return $process->getOutput();
     }
 
-    /**
-     * @param string|null $path
-     * @return string
-     */
     private function buildCommand(?string $path = null): string
     {
         return 'qpdf ' . ($this->source ?: '--empty') . ' ' . ($this->pages ? '--pages ' . implode(' ', $this->pages) . ' --' : '') . ' ' . ($path ?: '-');
