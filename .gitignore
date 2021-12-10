@@ -1,4 +1,5 @@
 /vendor/
+composer.lock
 
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php

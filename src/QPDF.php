@@ -18,6 +18,11 @@ class QPDF
 
     private ?int $timeout = 60;
 
+    public static function createInstance(): QPDF
+    {
+        return new self();
+    }
+
     public function setTimeout(?int $timeout): QPDF
     {
         $this->timeout = $timeout;
@@ -25,8 +30,15 @@ class QPDF
         return $this;
     }
 
+    /**
+     * @throws FileNotFoundException
+     */
     public function source(string $source): QPDF
     {
+        if (false === file_exists($source)) {
+            throw new FileNotFoundException($source);
+        }
+
         $this->source = $source;
 
         return $this;
@@ -49,7 +61,7 @@ class QPDF
      */
     public function addPages(string $file, ?string $pages = null): QPDF
     {
-        if (!file_exists($file)) {
+        if (false === file_exists($file)) {
             throw new FileNotFoundException($file);
         }
 
@@ -83,5 +95,10 @@ class QPDF
     private function buildCommand(?string $path = null): string
     {
         return 'qpdf ' . ($this->source ?: '--empty') . ' ' . ($this->pages ? '--pages ' . implode(' ', $this->pages) . ' --' : '') . ' ' . ($path ?: '-');
+    }
+
+    public function getVersion(): string
+    {
+        return Process::fromShellCommandline('qpdf --version')->mustRun()->getOutput();
     }
 }
