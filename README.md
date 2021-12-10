@@ -3,7 +3,7 @@
 This package can be used to merge (some pages of) PDF files into one PDF using the QPDF library.
 
 ## Installation
-```php
+```shell
 composer require webstack/qpdf
 ```
 
