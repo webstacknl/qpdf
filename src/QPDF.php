@@ -117,6 +117,16 @@ class QPDF
 
     public function getVersion(): string
     {
-        return Process::fromShellCommandline('qpdf --version')->mustRun()->getOutput();
+        $result = Process::fromShellCommandline('qpdf --version')->mustRun()->getOutput();
+
+        return str_replace('qpdf version ', '', $result);
+    }
+
+    /**
+     * Returns the number of pages in the input file
+     */
+    public function getNumberOfPages(string $path): int
+    {
+        return (int) Process::fromShellCommandline('qpdf -show-npages '. $path)->mustRun()->getOutput();
     }
 }

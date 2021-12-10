@@ -13,7 +13,6 @@ class Test extends TestCase
     {
         $output = QPDF::createInstance()->getVersion();
 
-        self::assertStringContainsString('qpdf version', $output);
         self::assertMatchesRegularExpression('|\d.\d.\d|', $output);
     }
 
@@ -29,7 +28,7 @@ class Test extends TestCase
             ->write($path);
 
         self::assertFileExists($path);
-        self::assertStringContainsString('4', Process::fromShellCommandline('qpdf -show-npages '. $path)->mustRun()->getOutput());
+        self::assertEquals(4, QPDF::createInstance()->getNumberOfPages($path));
     }
 
     /**
@@ -45,7 +44,7 @@ class Test extends TestCase
           ->write($path);
 
         self::assertFileExists($path);
-        self::assertStringContainsString('9', Process::fromShellCommandline('qpdf -show-npages '. $path)->mustRun()->getOutput());
+        self::assertEquals(9, QPDF::createInstance()->getNumberOfPages($path));
     }
 
     /**
@@ -61,6 +60,6 @@ class Test extends TestCase
             ->write($path);
 
         self::assertFileExists($path);
-        self::assertStringContainsString('5', Process::fromShellCommandline('qpdf -show-npages '. $path)->mustRun()->getOutput());
+        self::assertEquals(5, QPDF::createInstance()->getNumberOfPages($path));
     }
 }

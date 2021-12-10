@@ -51,6 +51,17 @@ QPDF::createInstance()
   ->output();
 ```
 
+Returns the number of pages in a file
+```php
+<?php
+
+use Webstack\QPDF\QPDF;
+
+require('vendor/autoload.php');
+
+QPDF::createInstance()->getNumberOfPages('input-1.pdf');
+```
+
 ## Tests
 To run the tests use the following  command
 ```shell
