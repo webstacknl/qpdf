@@ -63,18 +63,4 @@ class Test extends TestCase
         self::assertFileExists($path);
         self::assertStringContainsString('5', Process::fromShellCommandline('qpdf -show-npages '. $path)->mustRun()->getOutput());
     }
-
-    /**
-     * @throws FileNotFoundException
-     */
-    public function testOutput(): void
-    {
-        $output = QPDF::createInstance()
-            ->addPages('tests/files/source-1.pdf', '1')
-            ->addPages('tests/files/source-2.pdf', '2')
-            ->output();
-
-        // Check if the out is larger than 10 KB
-        self::assertGreaterThan(1024 * 10, strlen($output));
-    }
 }
