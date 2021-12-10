@@ -14,6 +14,9 @@ class QPDF
 {
     private ?string $source = null;
 
+    /**
+     * @var array<int, string> $pages
+     */
     private array $pages = [];
 
     private ?int $timeout = 60;
