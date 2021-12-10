@@ -70,11 +70,17 @@ class QPDF
         return $this;
     }
 
+    /**
+     * Runs the command and write the result to the given path
+     */
     public function write(string $path): void
     {
         $this->run($path);
     }
 
+    /**
+     * Runs the command and returns the result as a string
+     */
     public function output(): string
     {
         return $this->run();
@@ -84,10 +90,19 @@ class QPDF
     {
         $command = $this->buildCommand($path);
 
-        $process = Process::fromShellCommandline($command);
+        $script = sprintf('%s/qpdf-%s.sh', sys_get_temp_dir(), md5($command));
+
+        // Create a tmp file with the generated command because very long commands will fail otherwise
+        file_put_contents($script, '#!/bin/bash' . PHP_EOL . $command);
+        chmod($script, 0744);
+
+        $process = Process::fromShellCommandline($script);
         $process->setTimeout($this->timeout);
         $process->setIdleTimeout(null);
         $process->mustRun();
+
+        // Cleanup the tmp file
+        @unlink($script);
 
         return $process->getOutput();
     }
